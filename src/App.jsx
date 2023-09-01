@@ -1,14 +1,20 @@
 import React from "react";
-import { DatePicker } from "antd";
-import MyComponent from "./components/MyComponent";
-
+import NavBar from "./components/NavBar";
+import Home from "./pages/Home";
+import Article from "./pages/Article";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 class App extends React.Component {
   render() {
     return (
-      <div>
-        <DatePicker />
-        <MyComponent />
-      </div>
+      <BrowserRouter>
+        <Switch>
+          <div>
+            <NavBar name={"Almas"} />
+            <Route path="/home" component={Home} />
+            <Route path="/article" component={Article} />
+          </div>
+        </Switch>
+      </BrowserRouter>
     );
   }
 }
