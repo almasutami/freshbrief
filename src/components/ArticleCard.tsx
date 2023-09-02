@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Image, Layout, Skeleton } from "antd";
 import "../assets/styles/card.css";
 import dateFormat from "../utils/dateFormat";
+import { Link } from "react-router-dom";
 const { Content } = Layout;
 
 interface Article {
@@ -22,6 +23,15 @@ const imageStyle: React.CSSProperties = {
   borderRadius: "10px",
   maxHeight: "10rem",
   maxWidth: "15rem",
+};
+
+const articleHoverStyle: React.CSSProperties = {
+  fontFamily: "sans-serif",
+  textAlign: "left",
+  fontWeight: "light",
+  letterSpacing: "0.1em",
+  lineHeight: "1.5em",
+  color: "#404040",
 };
 
 interface Props {
@@ -56,22 +66,20 @@ const ArticleCard: React.FC<Props> = ({ article, style }) => {
                 marginTop: "30px",
               }}
             >
-              <p
-                style={{
-                  fontFamily: "sans-serif",
-                  textAlign: "left",
-                  fontWeight: "light",
-                  letterSpacing: "0.1em",
-                  lineHeight: "1.5em",
-                }}
+              <Link
+                to="/Article"
+                style={articleHoverStyle}
+                className="link-underline-dark"
               >
-                {article && article?.content
-                  ? article?.content
-                    ? article?.content.slice(0, 150)
-                    : ""
-                  : ""}
-                ...
-              </p>
+                <p>
+                  {article && article?.content
+                    ? article?.content
+                      ? article?.content.slice(0, 150)
+                      : ""
+                    : ""}
+                  ...
+                </p>
+              </Link>
             </Content>
             <Content
               style={{

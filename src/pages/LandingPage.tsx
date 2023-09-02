@@ -229,7 +229,18 @@ const LandingPage: React.FC<{}> = () => {
                     ? newestArticle?.content.slice(0, 150)
                     : ""
                   : ""}
-                ... <p className="text-decoration-italic">(Read More)</p>
+                ...{" "}
+                <p className="text-decoration-italic">
+                  <Link
+                    to="/Article"
+                    style={{
+                      color: "#404040",
+                      textDecorationColor: "#404040",
+                    }}
+                  >
+                    (Read More)
+                  </Link>
+                </p>
               </h4>
             </div>
           </Content>
