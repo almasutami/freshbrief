@@ -40,6 +40,31 @@ interface Props {
 }
 
 const ArticleCard: React.FC<Props> = ({ article, style }) => {
+  const renderArticleLink = (article: Article) => {
+    if (!article?.url) {
+      return <p>(No link found)</p>;
+    } else {
+      return (
+        <Link
+          to={`${article?.url}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={articleHoverStyle}
+          className="link-underline-dark"
+        >
+          <p>
+            {article && article?.content
+              ? article?.content
+                ? article?.content.slice(0, 150)
+                : ""
+              : ""}
+            ...
+          </p>
+        </Link>
+      );
+    }
+  };
+
   const renderArticle = () => {
     if (article === null) {
       return <Skeleton />;
@@ -66,22 +91,7 @@ const ArticleCard: React.FC<Props> = ({ article, style }) => {
                 marginTop: "30px",
               }}
             >
-              <Link
-                to={`${article?.url}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={articleHoverStyle}
-                className="link-underline-dark"
-              >
-                <p>
-                  {article && article?.content
-                    ? article?.content
-                      ? article?.content.slice(0, 150)
-                      : ""
-                    : ""}
-                  ...
-                </p>
-              </Link>
+              {renderArticleLink(article)}
             </Content>
             <Content
               style={{
@@ -106,10 +116,9 @@ const ArticleCard: React.FC<Props> = ({ article, style }) => {
                 </div>
                 <div>
                   <p>
-                    on{" "}
                     {article && article?.publishedAt
-                      ? dateFormat(article?.publishedAt)
-                      : "..."}
+                      ? `on ${dateFormat(article?.publishedAt)}`
+                      : ""}
                   </p>
                 </div>
               </div>
