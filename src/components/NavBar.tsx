@@ -53,14 +53,16 @@ const NavBar: React.FC<Props> = () => {
                 <ThisInput onChange={setValue} value={value} />
               </div>
               <div>
-                <Tooltip title="search">
-                  <Button
-                    style={buttonStyle}
-                    type="primary"
-                    shape="circle"
-                    icon={<SearchOutlined />}
-                  />
-                </Tooltip>
+                <Link to="/articlelist" className="text-decoration-none">
+                  <Tooltip title="search">
+                    <Button
+                      style={buttonStyle}
+                      type="primary"
+                      shape="circle"
+                      icon={<SearchOutlined />}
+                    />
+                  </Tooltip>
+                </Link>
               </div>
             </div>
           </Col>

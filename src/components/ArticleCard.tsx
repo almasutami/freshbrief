@@ -1,6 +1,7 @@
 import React from "react";
-import { Card, Image, Layout } from "antd";
+import { Card, Image, Layout, Skeleton } from "antd";
 import "../assets/styles/card.css";
+import dateFormat from "../utils/dateFormat";
 const { Content } = Layout;
 
 interface Article {
@@ -24,55 +25,92 @@ const imageStyle: React.CSSProperties = {
 };
 
 interface Props {
-  article: Article;
+  article: Article | null;
   style: React.CSSProperties;
 }
 
 const ArticleCard: React.FC<Props> = ({ article, style }) => {
-  return (
-    <div>
-      <Card title={article.title} bordered={false} style={style}>
-        <Layout style={{ backgroundColor: "#fff", alignItems: "center" }}>
-          <Content
-            style={{
-              backgroundColor: "#fff",
-              maxHeight: "10rem",
-              maxWidth: "15rem",
-            }}
-          >
-            <Image
-              style={imageStyle}
-              src={article && article.urlToImage ? article.urlToImage : ""}
-            />
-          </Content>
-          <Content
-            style={{
-              backgroundColor: "#fff",
-              height: "50%",
-              marginTop: "30px",
-            }}
-          >
-            <p
+  const renderArticle = () => {
+    if (article === null) {
+      return <Skeleton />;
+    } else {
+      return (
+        <Card title={article?.title} bordered={false} style={style}>
+          <Layout style={{ backgroundColor: "#fff", alignItems: "center" }}>
+            <Content
               style={{
-                fontFamily: "sans-serif",
-                textAlign: "left",
-                fontWeight: "light",
-                letterSpacing: "0.1em",
-                lineHeight: "1.5em",
+                backgroundColor: "#fff",
+                height: "10rem",
+                width: "15rem",
               }}
             >
-              {article && article.content
-                ? article.content
-                  ? article.content.slice(0, 150)
-                  : ""
-                : ""}
-              ...
-            </p>
-          </Content>
-        </Layout>
-      </Card>
-    </div>
-  );
+              <Image
+                style={imageStyle}
+                src={article && article?.urlToImage ? article?.urlToImage : ""}
+              />
+            </Content>
+            <Content
+              style={{
+                backgroundColor: "#fff",
+                height: "8rem",
+                marginTop: "30px",
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: "sans-serif",
+                  textAlign: "left",
+                  fontWeight: "light",
+                  letterSpacing: "0.1em",
+                  lineHeight: "1.5em",
+                }}
+              >
+                {article && article?.content
+                  ? article?.content
+                    ? article?.content.slice(0, 150)
+                    : ""
+                  : ""}
+                ...
+              </p>
+            </Content>
+            <Content
+              style={{
+                backgroundColor: "#fff",
+                height: "2rem",
+                marginTop: "20px",
+                fontFamily: "helvetica",
+                fontWeight: "light",
+              }}
+            >
+              <div className="d-flex flex-row gap-2">
+                <div>
+                  <p>
+                    {" "}
+                    {article && article?.author
+                      ? article?.author.slice(0, 20)
+                      : ""}{" "}
+                    {article && article?.author && article?.author.length > 20
+                      ? "..."
+                      : ""}
+                  </p>
+                </div>
+                <div>
+                  <p>
+                    on{" "}
+                    {article && article?.publishedAt
+                      ? dateFormat(article?.publishedAt)
+                      : "..."}
+                  </p>
+                </div>
+              </div>
+            </Content>
+          </Layout>
+        </Card>
+      );
+    }
+  };
+
+  return <div>{renderArticle()}</div>;
 };
 
 export default ArticleCard;

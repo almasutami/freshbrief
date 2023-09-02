@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Layout, Image, Button, Tooltip } from "antd";
+import { Layout, Image, Button, Tooltip, Skeleton } from "antd";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "../assets/styles/landing.css";
 import dateFormat from "../utils/dateFormat";
@@ -140,19 +141,103 @@ const LandingPage: React.FC<{}> = () => {
     });
   }, []);
 
-  if (!articleData) return null;
-
   //get newest article
-  const newestArticle = articleData.articles[0];
+  const newestArticle = articleData?.articles[0];
 
   //get some next articles
   const displayedArticles = [
-    articleData.articles[1],
-    articleData.articles[2],
-    articleData.articles[3],
-    articleData.articles[4],
+    articleData?.articles[1],
+    articleData?.articles[2],
+    articleData?.articles[3],
+    articleData?.articles[4],
   ];
   console.log(displayedArticles);
+
+  const renderContent = () => {
+    if (!articleData) {
+      return (
+        <Layout style={containerStyle}>
+          <Content>
+            <Skeleton />
+          </Content>
+        </Layout>
+      );
+    } else {
+      return (
+        <Layout style={containerStyle}>
+          <Content style={imageContentStyle}>
+            <Image.PreviewGroup items={[newestArticle?.urlToImage || ""]}>
+              <Image
+                style={imageStyle}
+                src={
+                  newestArticle && newestArticle?.urlToImage
+                    ? newestArticle?.urlToImage
+                    : ""
+                }
+              />
+            </Image.PreviewGroup>
+          </Content>
+          <Content style={contentStyle}>
+            <div
+              className="d-flex flex-row justify-content-between py-2"
+              style={{ alignItems: "center" }}
+            >
+              <div style={{ fontFamily: "sans-serif", fontWeight: "bold" }}>
+                <h3>
+                  {newestArticle && newestArticle?.author
+                    ? newestArticle?.author.slice(0, 30)
+                    : ""}{" "}
+                  {newestArticle &&
+                  newestArticle?.author &&
+                  newestArticle?.author.length > 30
+                    ? "..."
+                    : ""}
+                </h3>
+              </div>
+              <div style={{ fontFamily: "sans-serif", fontWeight: "light" }}>
+                <h4>
+                  {newestArticle && newestArticle?.publishedAt
+                    ? dateFormat(newestArticle?.publishedAt)
+                    : ""}
+                </h4>
+              </div>
+            </div>
+            <div className="py-1" style={titleStyle}>
+              <h2>
+                {newestArticle && newestArticle?.title
+                  ? newestArticle?.title.slice(0, 75)
+                  : ""}{" "}
+                {newestArticle &&
+                newestArticle?.title &&
+                newestArticle?.title.length > 75
+                  ? "..."
+                  : ""}
+              </h2>
+            </div>
+            <div>
+              <h4
+                style={{
+                  fontFamily: "sans-serif",
+                  textAlign: "left",
+                  fontWeight: "light",
+                  letterSpacing: "0.1em",
+                  lineHeight: "1.5em",
+                }}
+              >
+                {newestArticle && newestArticle?.content
+                  ? newestArticle?.content
+                    ? newestArticle?.content.slice(0, 150)
+                    : ""
+                  : ""}
+                ... <p className="text-decoration-italic">(Read More)</p>
+              </h4>
+            </div>
+          </Content>
+          <Content style={blankSpace}></Content>
+        </Layout>
+      );
+    }
+  };
 
   return (
     <div className="px-3 py-4" style={outerContainerStyle}>
@@ -189,77 +274,7 @@ const LandingPage: React.FC<{}> = () => {
             </div>
           </div>
         </Header>
-        <Layout style={containerStyle}>
-          <Content style={imageContentStyle}>
-            <Image.PreviewGroup items={[newestArticle.urlToImage]}>
-              <Image
-                style={imageStyle}
-                src={
-                  newestArticle && newestArticle.urlToImage
-                    ? newestArticle.urlToImage
-                    : ""
-                }
-              />
-            </Image.PreviewGroup>
-          </Content>
-          <Content style={contentStyle}>
-            <div
-              className="d-flex flex-row justify-content-between py-2"
-              style={{ alignItems: "center" }}
-            >
-              <div style={{ fontFamily: "sans-serif", fontWeight: "bold" }}>
-                <h3>
-                  {newestArticle && newestArticle.author
-                    ? newestArticle.author.slice(0, 30)
-                    : ""}{" "}
-                  {newestArticle &&
-                  newestArticle.author &&
-                  newestArticle.author.length > 30
-                    ? "..."
-                    : ""}
-                </h3>
-              </div>
-              <div style={{ fontFamily: "sans-serif", fontWeight: "light" }}>
-                <h4>
-                  {newestArticle && newestArticle.publishedAt
-                    ? dateFormat(newestArticle.publishedAt)
-                    : ""}
-                </h4>
-              </div>
-            </div>
-            <div className="py-1" style={titleStyle}>
-              <h2>
-                {newestArticle && newestArticle.title
-                  ? newestArticle.title.slice(0, 75)
-                  : ""}{" "}
-                {newestArticle &&
-                newestArticle.title &&
-                newestArticle.title.length > 75
-                  ? "..."
-                  : ""}
-              </h2>
-            </div>
-            <div>
-              <h4
-                style={{
-                  fontFamily: "sans-serif",
-                  textAlign: "left",
-                  fontWeight: "light",
-                  letterSpacing: "0.1em",
-                  lineHeight: "1.5em",
-                }}
-              >
-                {newestArticle && newestArticle.content
-                  ? newestArticle.content
-                    ? newestArticle.content.slice(0, 150)
-                    : ""
-                  : ""}
-                ... <p className="text-decoration-italic">(Read More)</p>
-              </h4>
-            </div>
-          </Content>
-          <Content style={blankSpace}></Content>
-        </Layout>
+        {renderContent()}
         <Layout style={displayedArticleStyle}>
           <Content>
             <h3
@@ -274,18 +289,32 @@ const LandingPage: React.FC<{}> = () => {
             </h3>
             <div style={cardContainerStyle}>
               <div className="d-flex flex-row justify-content-between align-items-center">
-                <ArticleCard article={displayedArticles[0]} style={cardStyle} />
-                <ArticleCard article={displayedArticles[1]} style={cardStyle} />
-                <ArticleCard article={displayedArticles[2]} style={cardStyle} />
-                <ArticleCard article={displayedArticles[3]} style={cardStyle} />
-                <Tooltip title="Explore more">
-                  <Button
-                    style={buttonStyle}
-                    type="primary"
-                    shape="circle"
-                    icon={<ArrowRightOutlined />}
-                  />
-                </Tooltip>
+                <ArticleCard
+                  article={displayedArticles[0] || null}
+                  style={cardStyle}
+                />
+                <ArticleCard
+                  article={displayedArticles[1] || null}
+                  style={cardStyle}
+                />
+                <ArticleCard
+                  article={displayedArticles[2] || null}
+                  style={cardStyle}
+                />
+                <ArticleCard
+                  article={displayedArticles[3] || null}
+                  style={cardStyle}
+                />
+                <Link to="/articlelist" className="text-decoration-none">
+                  <Tooltip title="Explore more">
+                    <Button
+                      style={buttonStyle}
+                      type="primary"
+                      shape="circle"
+                      icon={<ArrowRightOutlined />}
+                    />
+                  </Tooltip>
+                </Link>
               </div>
             </div>
           </Content>
