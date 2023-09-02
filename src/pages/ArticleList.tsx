@@ -3,6 +3,7 @@ import axios from "axios";
 import { Layout, Skeleton } from "antd";
 import "../assets/styles/landing.css";
 import ArticleCard from "../components/ArticleCard";
+import { connect } from "react-redux";
 
 const { Content } = Layout;
 
@@ -28,7 +29,7 @@ const cardStyle: React.CSSProperties = {
   boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
 };
 
-const ArticleList: React.FC<{}> = () => {
+const ArticleList: React.FC<{ userGlobal: any }> = ({ userGlobal }) => {
   interface ArticleData {
     status: string;
     totalResults: number;
@@ -49,14 +50,12 @@ const ArticleList: React.FC<{}> = () => {
   }
 
   const [articleData, setArticleData] = useState<ArticleData | null>(null);
-  //   const [keyword, setKeyword] = useState<ArticleData | null>(null);
+  const keyword = userGlobal.searchArticle || "car";
 
-  const API_URL = `https://newsapi.org/v2/everything?q=car&from=2023-08-03&sortBy=publishedAt&apiKey=e3be7690e20446209f8694c3b7c791b7`;
-  //   const API_URL = `https://newsapi.org/v2/everything?q=${keyword}&from=2023-08-03&sortBy=publishedAt&apiKey=e3be7690e20446209f8694c3b7c791b7`;
+  const API_URL = `https://newsapi.org/v2/everything?q=${keyword}&from=2023-08-03&sortBy=publishedAt&apiKey=e3be7690e20446209f8694c3b7c791b7`;
 
   useEffect(() => {
     axios.get(API_URL).then((response) => {
-      console.log(response.data);
       setArticleData(response.data);
     });
   }, [API_URL]);
@@ -96,4 +95,9 @@ const ArticleList: React.FC<{}> = () => {
   );
 };
 
-export default ArticleList;
+function mapStateToProps(state: any) {
+  console.log("state", state);
+  return { userGlobal: state.user };
+}
+
+export default connect(mapStateToProps)(ArticleList);

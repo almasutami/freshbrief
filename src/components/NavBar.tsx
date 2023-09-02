@@ -3,6 +3,8 @@ import { Col, Row, Input, Button, Tooltip } from "antd";
 import "../assets/styles/navbar.css";
 import { SearchOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { searchArticle } from "../redux/actions/user";
 const buttonStyle: React.CSSProperties = {
   background: "#75767B",
 };
@@ -23,7 +25,6 @@ const ThisInput = (props: InputProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: inputValue } = e.target;
     onChange(inputValue);
-    console.log(inputValue);
   };
 
   return (
@@ -33,6 +34,11 @@ const ThisInput = (props: InputProps) => {
 
 const NavBar: React.FC<Props> = () => {
   const [value, setValue] = useState("");
+
+  const searchArticleHandler = () => {
+    console.log("search clicked", value);
+    searchArticle(value);
+  };
 
   return (
     <div className="px-4 py-3 align-middle text-light bg-dark">
@@ -56,6 +62,7 @@ const NavBar: React.FC<Props> = () => {
                 <Link to="/articlelist" className="text-decoration-none">
                   <Tooltip title="search">
                     <Button
+                      onClick={searchArticleHandler}
                       style={buttonStyle}
                       type="primary"
                       shape="circle"
@@ -74,4 +81,12 @@ const NavBar: React.FC<Props> = () => {
   );
 };
 
-export default NavBar;
+function mapStateToProps(state: any) {
+  return { userGlobal: state.user };
+}
+
+const mapDispatchToProps = {
+  searchArticle,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

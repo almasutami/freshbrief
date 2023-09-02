@@ -136,7 +136,6 @@ const LandingPage: React.FC<{}> = () => {
 
   useEffect(() => {
     axios.get(API_URL).then((response) => {
-      console.log(response.data);
       setArticleData(response.data);
     });
   }, []);
@@ -151,7 +150,6 @@ const LandingPage: React.FC<{}> = () => {
     articleData?.articles[3],
     articleData?.articles[4],
   ];
-  console.log(displayedArticles);
 
   const renderContent = () => {
     if (!articleData) {
