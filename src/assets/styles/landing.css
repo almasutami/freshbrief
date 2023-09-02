@@ -1,0 +1,31 @@
+h1 {
+  font-family: "inter";
+  font-size: 36px !important;
+}
+
+h2 {
+  font-family: "inter";
+  font-size: 24px !important;
+}
+
+h3 {
+  font-family: "inter";
+  font-size: 18px !important;
+}
+
+h4 {
+  font-family: "inter";
+  font-size: 14px !important;
+  margin: 0 !important;
+}
+
+form {
+  font-family: "inter";
+  font-size: 12px !important;
+}
+
+p {
+  font-family: "inter";
+  font-size: 12px !important;
+  margin: 0px !important;
+}
