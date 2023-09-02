@@ -19,6 +19,8 @@ interface Article {
 
 const imageStyle: React.CSSProperties = {
   borderRadius: "10px",
+  maxHeight: "10rem",
+  maxWidth: "15rem",
 };
 
 interface Props {
@@ -30,8 +32,14 @@ const ArticleCard: React.FC<Props> = ({ article, style }) => {
   return (
     <div>
       <Card title={article.title} bordered={false} style={style}>
-        <Layout style={{ alignItems: "flex-end" }}>
-          <Content style={{ backgroundColor: "#fff", height: "50%" }}>
+        <Layout style={{ backgroundColor: "#fff", alignItems: "center" }}>
+          <Content
+            style={{
+              backgroundColor: "#fff",
+              maxHeight: "10rem",
+              maxWidth: "15rem",
+            }}
+          >
             <Image
               style={imageStyle}
               src={article && article.urlToImage ? article.urlToImage : ""}

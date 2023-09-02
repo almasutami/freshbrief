@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Layout, Image, Button } from "antd";
+import { Layout, Image, Button, Tooltip } from "antd";
 import axios from "axios";
 import "../assets/styles/landing.css";
 import dateFormat from "../utils/dateFormat";
 import ArticleCard from "../components/ArticleCard";
+import { ArrowRightOutlined } from "@ant-design/icons";
 
 const { Header, Footer, Content } = Layout;
 //API example: "https://newsapi.org/v2/everything?q=tesla&from=2023-08-02&sortBy=publishedAt&apiKey=e3be7690e20446209f8694c3b7c791b7";
@@ -13,7 +14,7 @@ const API_URL =
 const headerStyle: React.CSSProperties = {
   textAlign: "center",
   color: "#000000",
-  height: "15%",
+  height: "12%",
   backgroundColor: "#f3f3f3",
   margin: "10px",
   borderRadius: "5px",
@@ -33,6 +34,8 @@ const imageContentStyle: React.CSSProperties = {
 
 const imageStyle: React.CSSProperties = {
   borderRadius: "10px",
+  maxHeight: "25rem",
+  maxWidth: "30rem",
 };
 
 const contentStyle: React.CSSProperties = {
@@ -56,11 +59,12 @@ const footerStyle: React.CSSProperties = {
 };
 
 const containerStyle: React.CSSProperties = {
-  height: "70%",
+  height: "50%",
   color: "#fff",
   backgroundColor: "#fff",
   display: "flex",
   flexDirection: "row",
+  margin: "20px 0px",
   padding: "0px 12px",
   alignItems: "start",
 };
@@ -101,6 +105,10 @@ const titleStyle: React.CSSProperties = {
 const cardStyle: React.CSSProperties = {
   width: "300px",
   height: "450px",
+};
+
+const buttonStyle: React.CSSProperties = {
+  background: "#75767B",
 };
 
 const LandingPage: React.FC<{}> = () => {
@@ -270,7 +278,14 @@ const LandingPage: React.FC<{}> = () => {
                 <ArticleCard article={displayedArticles[1]} style={cardStyle} />
                 <ArticleCard article={displayedArticles[2]} style={cardStyle} />
                 <ArticleCard article={displayedArticles[3]} style={cardStyle} />
-                <Button>Explore</Button>
+                <Tooltip title="Explore more">
+                  <Button
+                    style={buttonStyle}
+                    type="primary"
+                    shape="circle"
+                    icon={<ArrowRightOutlined />}
+                  />
+                </Tooltip>
               </div>
             </div>
           </Content>
