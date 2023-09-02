@@ -232,7 +232,9 @@ const LandingPage: React.FC<{}> = () => {
                 ...{" "}
                 <p className="text-decoration-italic">
                   <Link
-                    to="/Article"
+                    to={`${newestArticle?.url}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     style={{
                       color: "#404040",
                       textDecorationColor: "#404040",

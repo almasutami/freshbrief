@@ -67,7 +67,9 @@ const ArticleCard: React.FC<Props> = ({ article, style }) => {
               }}
             >
               <Link
-                to="/Article"
+                to={`${article?.url}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 style={articleHoverStyle}
                 className="link-underline-dark"
               >
