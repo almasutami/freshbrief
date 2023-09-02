@@ -1,10 +1,6 @@
 import React from "react";
 
-interface Props {
-  name: string;
-}
-
-const HomePage: React.FC<Props> = ({ name }) => {
+const HomePage: React.FC<{}> = () => {
   return (
     <div>
       <h1>This is article page</h1>
