@@ -8,7 +8,7 @@ import "bootstrap/dist/css/bootstrap.css";
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <NavBar name={""} />
+      <NavBar />
       <Routes>
         <Route Component={LandingPage} path="/" />
         <Route Component={ArticleList} path="/articlelist" />

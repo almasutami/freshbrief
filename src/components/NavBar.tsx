@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Col, Row, Input, Button, Tooltip } from "antd";
 import "../assets/styles/navbar.css";
 import { SearchOutlined } from "@ant-design/icons";
@@ -9,81 +9,82 @@ const buttonStyle: React.CSSProperties = {
   background: "#75767B",
 };
 
-interface Props {
-  name: string;
+interface MyProps {
+  searchArticle: any;
+}
+interface MyState {
+  searchArticle: string;
 }
 
-interface InputProps {
-  style?: React.CSSProperties;
-  value: string;
-  onChange: (value: string) => void;
-}
-
-const ThisInput = (props: InputProps) => {
-  const { onChange } = props;
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value: inputValue } = e.target;
-    onChange(inputValue);
+class NavBar extends React.Component<MyProps, MyState> {
+  state = {
+    searchArticle: "",
   };
 
-  return (
-    <Input {...props} onChange={handleChange} placeholder="Search article..." />
-  );
-};
+  inputHandler = (event: any) => {
+    const value = event.target.value as string;
 
-const NavBar: React.FC<Props> = () => {
-  const [value, setValue] = useState("");
-
-  const searchArticleHandler = () => {
-    console.log("search clicked", value);
-    searchArticle(value);
+    this.setState(() => ({
+      searchArticle: value,
+    }));
   };
 
-  return (
-    <div className="px-4 py-3 align-middle text-light bg-dark">
-      <>
-        <Row style={{ alignItems: "center" }}>
-          <Col span={3}>
-            <Link
-              to="/"
-              className="align-middle text-white text-decoration-none"
-            >
-              <h3 className="m-0">FRESHBRIEF</h3>
-            </Link>
-          </Col>
-          <Col span={5}></Col>
-          <Col span={8}>
-            <div className="d-flex flex-row gap-2" style={{ width: "100%" }}>
-              <div style={{ width: "100%" }}>
-                <ThisInput onChange={setValue} value={value} />
-              </div>
-              <div>
-                <Link to="/articlelist" className="text-decoration-none">
-                  <Tooltip title="search">
-                    <Button
-                      onClick={searchArticleHandler}
-                      style={buttonStyle}
-                      type="primary"
-                      shape="circle"
-                      icon={<SearchOutlined />}
-                    />
-                  </Tooltip>
-                </Link>
-              </div>
-            </div>
-          </Col>
-          <Col span={5}></Col>
-          <Col span={3}></Col>
-        </Row>
-      </>
-    </div>
-  );
-};
+  searchProductHandler = () => {
+    console.log("search clicked", this.state.searchArticle);
+    this.props.searchArticle(this.state);
+  };
 
-function mapStateToProps(state: any) {
-  return { userGlobal: state.user };
+  render() {
+    return (
+      <div className="px-4 py-3 align-middle text-light bg-dark">
+        <>
+          <Row style={{ alignItems: "center" }}>
+            <Col span={3}>
+              <Link
+                to="/"
+                className="align-middle text-white text-decoration-none"
+              >
+                <h3 className="m-0">FRESHBRIEF</h3>
+              </Link>
+            </Col>
+            <Col span={5}></Col>
+            <Col span={8}>
+              <div className="d-flex flex-row gap-2" style={{ width: "100%" }}>
+                <div style={{ width: "100%" }}>
+                  <Input
+                    onChange={this.inputHandler}
+                    placeholder="Search article..."
+                  />
+                </div>
+                <div>
+                  <Link to="/articlelist" className="text-decoration-none">
+                    <Tooltip title="search">
+                      <Button
+                        onClick={this.searchProductHandler}
+                        style={buttonStyle}
+                        type="primary"
+                        shape="circle"
+                        icon={<SearchOutlined />}
+                      />
+                    </Tooltip>
+                  </Link>
+                </div>
+              </div>
+            </Col>
+            <Col span={5}></Col>
+            <Col span={3}></Col>
+          </Row>
+        </>
+      </div>
+    );
+  }
 }
+
+const mapStateToProps = (state: any) => {
+  return {
+    userGlobal: state.user,
+  };
+};
 
 const mapDispatchToProps = {
   searchArticle,

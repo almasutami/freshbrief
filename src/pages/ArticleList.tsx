@@ -96,7 +96,6 @@ const ArticleList: React.FC<{ userGlobal: any }> = ({ userGlobal }) => {
 };
 
 function mapStateToProps(state: any) {
-  console.log("state", state);
   return { userGlobal: state.user };
 }
 
