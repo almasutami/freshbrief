@@ -55,6 +55,7 @@ const ArticleList: React.FC<{ userGlobal: any }> = ({ userGlobal }) => {
   const API_URL = `https://newsapi.org/v2/everything?q=${keyword}&from=2023-08-03&sortBy=publishedAt&apiKey=e3be7690e20446209f8694c3b7c791b7`;
 
   useEffect(() => {
+    setArticleData(null);
     axios.get(API_URL).then((response) => {
       setArticleData(response.data);
     });
