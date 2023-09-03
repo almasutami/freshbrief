@@ -9,8 +9,14 @@ const dateFormat = (date: string) => {
   const day = `${
     dateObj.getDate() < 10 ? `0${dateObj.getDate()}` : dateObj.getDate()
   }`;
-  const hours = dateObj.getHours();
-  const minutes = dateObj.getMinutes();
+  const hours = `${
+    dateObj.getHours() < 10 ? `0${dateObj.getHours()}` : dateObj.getHours()
+  }`;
+  const minutes = `${
+    dateObj.getMinutes() < 10
+      ? `0${dateObj.getMinutes()}`
+      : dateObj.getMinutes()
+  }`;
   return `${day}/${month}/${year} at ${hours}:${minutes}`;
 };
 
