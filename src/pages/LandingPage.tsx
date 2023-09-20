@@ -8,9 +8,9 @@ import ArticleCard from "../components/ArticleCard";
 import { ArrowRightOutlined } from "@ant-design/icons";
 
 const { Header, Footer, Content } = Layout;
-//API example: "https://newsapi.org/v2/everything?q=tesla&from=2023-08-02&sortBy=publishedAt&apiKey=e3be7690e20446209f8694c3b7c791b7";
+
 const API_URL =
-  "https://newsapi.org/v2/everything?q=car&from=2023-08-03&sortBy=publishedAt&apiKey=e3be7690e20446209f8694c3b7c791b7";
+  "https://newsapi.org/v2/everything?q=car&from=2023-17-03&sortBy=publishedAt&apiKey=411f9903f002408aae8814d8f7635d9c";
 
 const headerStyle: React.CSSProperties = {
   textAlign: "center",

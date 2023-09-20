@@ -52,7 +52,7 @@ const ArticleList: React.FC<{ userGlobal: any }> = ({ userGlobal }) => {
   const [articleData, setArticleData] = useState<ArticleData | null>(null);
   const keyword = userGlobal.searchArticle || "car";
 
-  const API_URL = `https://newsapi.org/v2/everything?q=${keyword}&from=2023-08-03&sortBy=publishedAt&apiKey=e3be7690e20446209f8694c3b7c791b7`;
+  const API_URL = `https://newsapi.org/v2/everything?q=${keyword}&from=2023-17-03&sortBy=publishedAt&apiKey=411f9903f002408aae8814d8f7635d9c`;
 
   useEffect(() => {
     setArticleData(null);
